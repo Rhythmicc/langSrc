@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: langSrc
+Version: 0.0.1
+Summary: A language package manager
+Home-page: https://github.com/Rhythmicc/langSrc.git
+Author: RhythmLian
+License: MIT
+Keywords: language package manager
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+<h1 style="text-align: center"> langSrc </h1>
+
+## Install
+
+```shell
+pip3 install langSrc
+```
+
+## Demo
+
+```python
+from langSrc import LanguageDetector
+
+lang = LanguageDetector("zh", "lang.json")
+lang.register(
+    "language",
+    {
+        "zh": "语言",
+        "en": "Language",
+        "jp": "言語",
+        "kor": "언어",
+        "fra": "Langue",
+        "spa": "Idioma",
+        "th": "ภาษา",
+    },
+)
+
+print(lang.language)
+
+# 语言
+```

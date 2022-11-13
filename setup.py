@@ -17,7 +17,7 @@ setup(
     ],
     keywords="language package manager",
     author="RhythmLian",
-    url="< which url to find your lib >",
+    url="https://github.com/Rhythmicc/langSrc.git",
     license="MIT",
     packages=find_packages(),
     include_package_data=True,

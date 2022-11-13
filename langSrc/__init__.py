@@ -1,45 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 name = "langSrc"
-valid_lang = [
-    "zh",  # 中文 | Chinese | 🇨🇳
-    "en",  # 英文 | English | 🇬🇧
-    "jp",  # 日文 | Japanese | 🇯🇵
-    "kor",  # 韩文 | Korean | 🇰🇷
-    "fra",  # 法文 | French | 🇫🇷
-    "spa",  # 西班牙文 | Spanish | 🇪🇸
-    "th",  # 泰文 | Thai | 🇹🇭
-    "ara",  # 阿拉伯文 | Arabic | 🇸🇦
-    "ru",  # 俄文 | Russian | 🇷🇺
-    "pt",  # 葡萄牙文 | Portuguese | 🇵🇹
-    "de",  # 德文 | German | 🇩🇪
-    "it",  # 意大利文 | Italian | 🇮🇹
-    "el",  # 希腊文 | Greek | 🇬🇷
-    "nl",  # 荷兰文 | Dutch | 🇳🇱
-    "bul",  # 保加利亚文 | Bulgarian | 🇧🇬
-    "est",  # 爱沙尼亚文 | Estonian | 🇪🇪
-    "dan",  # 丹麦文 | Danish | 🇩🇰
-    "fin",  # 芬兰文 | Finnish | 🇫🇮
-    "cs",  # 捷克文 | Czech | 🇨🇿
-    "rom",  # 罗马尼亚文 | Romanian | 🇷🇴
-    "slo",  # 斯洛文尼亚文 | Slovenian | 🇸🇮
-    "swe",  # 瑞典文 | Swedish | 🇸🇪
-    "hu",  # 匈牙利文 | Hungarian | 🇭🇺
-    "vie",  # 越南文 | Vietnamese | 🇻🇳
-]
 
 
 class LanguageDetector:
-    def __init__(self, lang, srcPath, skip_language_check=False, auto_translate=None):
+    def __init__(self, lang, srcPath, auto_translate=None):
         """
         :param lang: 语言 | Language
         :param srcPath: 语言源文件路径 | Language source file path
-        :param skip_language_check: 跳过语言检查 | Skip language check
         :param auto_translate: 自动翻译函数 | Auto translate function: func(text, lang) -> str
         """
-        if lang.lower() not in valid_lang and not skip_language_check:
-            raise ValueError("Invalid or not support language")
-        self.default_lang = lang
+        self.default_lang = lang.lower()
         self.srcPath = srcPath
         self.save_flag = 0
         self.load()
@@ -64,14 +35,14 @@ class LanguageDetector:
             for name, word in self._src.items():
                 self.register(name, word)
 
-    def register(self, name, word):
+    def register(self, name: str, word: dict):
         """
         注册词条
         Register
 
+        :param name: 词条名 | Entry name
         :param word: 词条, like:
         {
-            "name": "language",
             "zh": "语言",
             "en": "Language",
             "jp": "言語",

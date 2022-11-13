@@ -30,7 +30,7 @@ print(lang.language)
 # 语言
 ```
 
-This will generate a file named [`lang.json`](./blob/main/lang.json):
+This will generate a file named [`lang.json`](./lang.json):
 
 ```json title="lang.json"
 {

@@ -10,14 +10,14 @@ class LanguageDetector:
         :param srcPath: 语言源文件路径 | Language source file path
         :param auto_translate: 自动翻译函数 | Auto translate function: func(text, lang) -> str
         """
-        self.default_lang = lang.lower()
-        self.srcPath = srcPath
-        self.save_flag = 0
-        self.load()
-        self.save_flag = 1
-        self.translate = auto_translate
+        self._default_lang = lang.lower()
+        self._srcPath = srcPath
+        self._save_flag = 0
+        self._load()
+        self._save_flag = 1
+        self._translate = auto_translate
 
-    def load(self):
+    def _load(self):
         """
         加载语言包
         Load language package
@@ -33,9 +33,9 @@ class LanguageDetector:
                 self._src = json.load(f)
 
             for name, word in self._src.items():
-                self.register(name, word)
+                self._register(name, word)
 
-    def register(self, name: str, word: dict):
+    def _register(self, name: str, word: dict):
         """
         注册词条
         Register
@@ -70,27 +70,27 @@ class LanguageDetector:
         }
         """
         if not hasattr(self, name):
-            setattr(self, name, word.get(self.default_lang, None))
-            if self.save_flag > 0:
+            setattr(self, name, word.get(self._default_lang, None))
+            if self._save_flag > 0:
                 self._src[name] = word
-                self.save_flag = 2
+                self._save_flag = 2
         else:
             raise ValueError("The word has been registered")
 
     def __getitem__(self, item):
         res = getattr(self, item, None)
-        if self.auto_translate and res is None:
-            res = self.auto_translate(
+        if self._translate and res is None:
+            res = self._translate(
                 self._src[item][list(self._src[item].keys())[0]], self.default_lang
             )
             setattr(self, item, res)
-            self._src[item][self.default_lang] = res
-            self.save_flag = 2
+            self._src[item][self._default_lang] = res
+            self._save_flag = 2
         return res
 
     def __del__(self):
-        if self.save_flag == 2:
-            with open(self.srcPath, "w", encoding="utf-8") as f:
+        if self._save_flag == 2:
+            with open(self._srcPath, "w", encoding="utf-8") as f:
                 import json
 
                 json.dump(self._src, f, ensure_ascii=False, indent=4)

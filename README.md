@@ -25,7 +25,7 @@ lang.register(
     },
 )
 
-print(lang.language)
+print(lang.language) # or print(lang["language"])
 
 # 语言
 ```

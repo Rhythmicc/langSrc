@@ -1,0 +1,15 @@
+{
+ "build": "rm -rf dist; python3 setup.py sdist",
+ "entry_point": "setup.py",
+ "executable": "twine upload dist/*",
+ "input_file": "",
+ "template_root": "",
+ "server_targets": [
+  {
+   "user": "",
+   "host": "",
+   "port": 22,
+   "path": ""
+  }
+ ]
+}

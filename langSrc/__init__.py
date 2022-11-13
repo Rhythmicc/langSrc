@@ -30,18 +30,21 @@ valid_lang = [
 
 
 class LanguageDetector:
-    def __init__(self, lang, srcPath):
+    def __init__(self, lang, srcPath, skip_language_check=False, auto_translate=None):
         """
         :param lang: 语言 | Language
         :param srcPath: 语言源文件路径 | Language source file path
+        :param skip_language_check: 跳过语言检查 | Skip language check
+        :param auto_translate: 自动翻译函数 | Auto translate function: func(text, lang) -> str
         """
-        if lang.lower() not in valid_lang:
+        if lang.lower() not in valid_lang and not skip_language_check:
             raise ValueError("Invalid or not support language")
         self.default_lang = lang
         self.srcPath = srcPath
         self.save_flag = 0
         self.load()
         self.save_flag = 1
+        self.translate = auto_translate
 
     def load(self):
         """
@@ -104,7 +107,15 @@ class LanguageDetector:
             raise ValueError("The word has been registered")
 
     def __getitem__(self, item):
-        return getattr(self, item)
+        res = getattr(self, item, None)
+        if self.auto_translate and res is None:
+            res = self.auto_translate(
+                self._src[item][list(self._src[item].keys())[0]], self.default_lang
+            )
+            setattr(self, item, res)
+            self._src[item][self.default_lang] = res
+            self.save_flag = 2
+        return res
 
     def __del__(self):
         if self.save_flag == 2:

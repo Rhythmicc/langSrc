@@ -24,10 +24,10 @@ class LanguageDetector:
         """
         import os
 
-        if not os.path.exists(self.srcPath):
+        if not os.path.exists(self._srcPath):
             self._src = {}
         else:
-            with open(self.srcPath, "r", encoding="utf-8") as f:
+            with open(self._srcPath, "r", encoding="utf-8") as f:
                 import json
 
                 self._src = json.load(f)

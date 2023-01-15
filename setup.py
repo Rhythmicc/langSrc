@@ -1,14 +1,11 @@
 from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-VERSION = "0.0.5"
+VERSION = "0.0.6"
 
 setup(
     name="langSrc",
     version=VERSION,
     description="A language package manager",
-    long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3",

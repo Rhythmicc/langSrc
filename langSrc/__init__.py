@@ -4,12 +4,14 @@ name = "langSrc"
 
 
 class LanguageDetector:
-    def __init__(self, lang, srcPath, auto_translate=None):
+    def __init__(self, lang, srcPath, auto_translate=None, native_lang=None):
         """
         :param lang: 语言 | Language
         :param srcPath: 语言源文件路径 | Language source file path
         :param auto_translate: 自动翻译函数 | Auto translate function: func(text, lang) -> str
+        :param native_lang: 本地语言 | Native language
         """
+        self._native_lang = native_lang
         self._default_lang = lang.lower()
         self._srcPath = srcPath
         self._save_flag = 0
@@ -70,7 +72,7 @@ class LanguageDetector:
         }
         """
         if not hasattr(self, name):
-            setattr(self, name, word.get(self._default_lang, None))
+            setattr(self, name, word.get(self._default_lang, word.get(self._native_lang, None)))
             if self._save_flag > 0:
                 self._src[name] = word
                 self._save_flag = 2

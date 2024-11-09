@@ -12,7 +12,7 @@ pip3 install langSrc
 from langSrc import LanguageDetector
 
 lang = LanguageDetector("zh", "lang.json")
-lang.register(
+lang._register(
     "language",
     {
         "zh": "语言",

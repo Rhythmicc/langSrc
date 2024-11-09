@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 name = "langSrc"
 
+import atexit
 
 class LanguageDetector:
     def __init__(self, lang, srcPath, auto_translate=None, native_lang=None):
@@ -18,6 +19,7 @@ class LanguageDetector:
         self._load()
         self._save_flag = 1
         self._translate = auto_translate
+        atexit.register(self.pre_exit)
 
     def _load(self):
         """
@@ -90,7 +92,7 @@ class LanguageDetector:
             self._save_flag = 2
         return res
 
-    def __del__(self):
+    def pre_exit(self):
         if self._save_flag == 2:
             with open(self._srcPath, "w", encoding="utf-8") as f:
                 import json

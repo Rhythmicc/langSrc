@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "langsrc"
-version = "0.0.8"
+version = "0.0.9"
 description = "A language package manager"
 authors = ["Rhythmicc <rhythmlian.cn@gmail.com>"]
 license = "MIT"
